@@ -28,7 +28,6 @@
 - [Tailwind CSS](https://tailwindcss.com/)
 - [React Hook Form](https://react-hook-form.com/)
 - [React Query](https://tanstack.com/query/latest)
-- [Compound Component Pattern](https://www.patterns.dev/react/)
 
 ### بک‌اند (fronthooks.com)
 
