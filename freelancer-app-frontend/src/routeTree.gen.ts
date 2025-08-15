@@ -8,13 +8,45 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as IndexRouteImport } from './routes/index'
+import { createFileRoute } from '@tanstack/react-router'
 
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as CompleteProfileRouteImport } from './routes/complete-profile'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as NotFoundRouteImport } from './routes/$notFound'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as OwnerIndexRouteImport } from './routes/owner/index'
+import { Route as OwnerDashboardRouteImport } from './routes/owner/dashboard'
+import { Route as Owner_ownerRouteImport } from './routes/owner/__owner'
+import { Route as OwnerProjectsIndexRouteImport } from './routes/owner/projects/index'
+import { Route as OwnerProjectsIdRouteImport } from './routes/owner/projects/$id'
+
+const OwnerRouteImport = createFileRoute('/owner')()
+
+const OwnerRoute = OwnerRouteImport.update({
+  id: '/owner',
+  path: '/owner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompleteProfileRoute = CompleteProfileRouteImport.update({
+  id: '/complete-profile',
+  path: '/complete-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotFoundRoute = NotFoundRouteImport.update({
+  id: '/$notFound',
+  path: '/$notFound',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,40 +54,151 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OwnerIndexRoute = OwnerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerDashboardRoute = OwnerDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const Owner_ownerRoute = Owner_ownerRouteImport.update({
+  id: '/__owner',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerProjectsIndexRoute = OwnerProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerProjectsIdRoute = OwnerProjectsIdRouteImport.update({
+  id: '/projects/$id',
+  path: '/projects/$id',
+  getParentRoute: () => OwnerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$notFound': typeof NotFoundRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/complete-profile': typeof CompleteProfileRoute
+  '/owner': typeof Owner_ownerRoute
+  '/owner/dashboard': typeof OwnerDashboardRoute
+  '/owner/': typeof OwnerIndexRoute
+  '/owner/projects/$id': typeof OwnerProjectsIdRoute
+  '/owner/projects': typeof OwnerProjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$notFound': typeof NotFoundRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/complete-profile': typeof CompleteProfileRoute
+  '/owner': typeof OwnerIndexRoute
+  '/owner/dashboard': typeof OwnerDashboardRoute
+  '/owner/projects/$id': typeof OwnerProjectsIdRoute
+  '/owner/projects': typeof OwnerProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$notFound': typeof NotFoundRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/complete-profile': typeof CompleteProfileRoute
+  '/owner': typeof OwnerRouteWithChildren
+  '/owner/__owner': typeof Owner_ownerRoute
+  '/owner/dashboard': typeof OwnerDashboardRoute
+  '/owner/': typeof OwnerIndexRoute
+  '/owner/projects/$id': typeof OwnerProjectsIdRoute
+  '/owner/projects/': typeof OwnerProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths:
+    | '/'
+    | '/$notFound'
+    | '/about'
+    | '/auth'
+    | '/complete-profile'
+    | '/owner'
+    | '/owner/dashboard'
+    | '/owner/'
+    | '/owner/projects/$id'
+    | '/owner/projects'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to:
+    | '/'
+    | '/$notFound'
+    | '/about'
+    | '/auth'
+    | '/complete-profile'
+    | '/owner'
+    | '/owner/dashboard'
+    | '/owner/projects/$id'
+    | '/owner/projects'
+  id:
+    | '__root__'
+    | '/'
+    | '/$notFound'
+    | '/about'
+    | '/auth'
+    | '/complete-profile'
+    | '/owner'
+    | '/owner/__owner'
+    | '/owner/dashboard'
+    | '/owner/'
+    | '/owner/projects/$id'
+    | '/owner/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  NotFoundRoute: typeof NotFoundRoute
   AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
+  CompleteProfileRoute: typeof CompleteProfileRoute
+  OwnerRoute: typeof OwnerRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/owner': {
+      id: '/owner'
+      path: '/owner'
+      fullPath: '/owner'
+      preLoaderRoute: typeof OwnerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/complete-profile': {
+      id: '/complete-profile'
+      path: '/complete-profile'
+      fullPath: '/complete-profile'
+      preLoaderRoute: typeof CompleteProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$notFound': {
+      id: '/$notFound'
+      path: '/$notFound'
+      fullPath: '/$notFound'
+      preLoaderRoute: typeof NotFoundRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -65,12 +208,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/owner/': {
+      id: '/owner/'
+      path: '/'
+      fullPath: '/owner/'
+      preLoaderRoute: typeof OwnerIndexRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/dashboard': {
+      id: '/owner/dashboard'
+      path: '/dashboard'
+      fullPath: '/owner/dashboard'
+      preLoaderRoute: typeof OwnerDashboardRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/__owner': {
+      id: '/owner/__owner'
+      path: '/owner'
+      fullPath: '/owner'
+      preLoaderRoute: typeof Owner_ownerRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/projects/': {
+      id: '/owner/projects/'
+      path: '/projects'
+      fullPath: '/owner/projects'
+      preLoaderRoute: typeof OwnerProjectsIndexRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/projects/$id': {
+      id: '/owner/projects/$id'
+      path: '/projects/$id'
+      fullPath: '/owner/projects/$id'
+      preLoaderRoute: typeof OwnerProjectsIdRouteImport
+      parentRoute: typeof OwnerRoute
+    }
   }
 }
 
+interface OwnerRouteChildren {
+  Owner_ownerRoute: typeof Owner_ownerRoute
+  OwnerDashboardRoute: typeof OwnerDashboardRoute
+  OwnerIndexRoute: typeof OwnerIndexRoute
+  OwnerProjectsIdRoute: typeof OwnerProjectsIdRoute
+  OwnerProjectsIndexRoute: typeof OwnerProjectsIndexRoute
+}
+
+const OwnerRouteChildren: OwnerRouteChildren = {
+  Owner_ownerRoute: Owner_ownerRoute,
+  OwnerDashboardRoute: OwnerDashboardRoute,
+  OwnerIndexRoute: OwnerIndexRoute,
+  OwnerProjectsIdRoute: OwnerProjectsIdRoute,
+  OwnerProjectsIndexRoute: OwnerProjectsIndexRoute,
+}
+
+const OwnerRouteWithChildren = OwnerRoute._addFileChildren(OwnerRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  NotFoundRoute: NotFoundRoute,
   AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
+  CompleteProfileRoute: CompleteProfileRoute,
+  OwnerRoute: OwnerRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

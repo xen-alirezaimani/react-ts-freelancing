@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import type { LocaleKey } from "./locale";
 
 export default function App() {
   const { i18n, t } = useTranslation();

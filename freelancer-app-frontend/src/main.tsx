@@ -1,5 +1,4 @@
 import "./i18n";
-import App from "./App.tsx";
 import { StrictMode } from "react";
 import { routeTree } from "./routeTree.gen";
 import { createRoot } from "react-dom/client";
