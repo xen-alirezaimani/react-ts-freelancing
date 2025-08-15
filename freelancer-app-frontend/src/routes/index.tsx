@@ -1,4 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import HomePage from "../pages/HomePage";
+import { Navigate, createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/")({ component: HomePage });
+export const Route = createFileRoute("/")({
+  component: () => {
+    return <Navigate to="/fa" replace />;
+  },
+});
