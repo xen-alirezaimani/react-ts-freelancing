@@ -1,3 +1,7 @@
 export const en = {
-  hello: "hello world!"
+  hello: "hello world!",
+  auth: {
+    login: {},
+    completeProfile: {},
+  },
 };

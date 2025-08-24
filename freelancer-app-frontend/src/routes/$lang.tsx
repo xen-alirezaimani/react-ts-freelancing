@@ -14,9 +14,11 @@ function LangLayout() {
 
   useEffect(() => {
     if (lang && !["fa", "en"].includes(lang)) {
-      navigate({ to: "/fa", replace: true });
+      navigate({ to: "/$lang", params: { lang: "fa" }, replace: true });
     } else {
-      i18n.changeLanguage(lang ?? "fa");
+      const activeLang = lang ?? "fa";
+      i18n.changeLanguage(activeLang);
+      document.documentElement.setAttribute("dir", activeLang === "fa" ? "rtl" : "ltr");
     }
   }, [lang, navigate, i18n]);
 
